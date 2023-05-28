@@ -3,43 +3,38 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { Link } from "react-router-dom";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import VideoLength from "../shared/videoLength";
-
-const VideoCard = ({ video }) => {
+const VideoCard = ({ postId, submission ,creator,reaction,comment}) => {
+  // Use postId and thumbnail in the component as needed
+  // console.log(postId);
   return (
-    <Link to={`/video/${video.videoId}`}>
+    <Link to={`data/posts/${submission}`} >
       <div className="flex flex-col mb-8">
-        <div className="relative h-48 md:h-40 md:rounded-xl overflow-hidden">
-          <img
-            className="h-full w-full object-cover"
-            src={video?.thumbnails?.[0]?.url}
-          />
-          {video.lengthSeconds && <VideoLength time={video?.lengthSeconds} />}
+        <div className="relative h-65 md:h-30 md:rounded-xl overflow-hidden">
+          <img className="h-full w-full object-cover" src={submission?.thumbnail} alt="" />
         </div>
         <div className="flex text-white mt-3">
-          <div className="flex item-start">
+          <div className="flex items-start">
             <div className="flex h-9 w-9 rounded-full overflow-hidden">
               <img
                 className="h-full w-full object-cover"
-                src={video?.author?.avatar[0]?.url}
+                src={creator?.pic}
               />
             </div>
           </div>
           <div className="flex flex-col ml-3 overflow-hidden">
-            <span className="text-sn font-bold line-clamp-2">
-              {video?.title}
+            <span className="text-sm font-bold line-clamp-2">
+              {creator?.name}
             </span>
-            <span className="text-[12px] font-semibold mt-2 text-white/[0.7] flex items-center">
-              {video?.author?.title}
-              {video?.author?.badges[0]?.type === "VERIFIED_CHANNEL" && (
-                <BsFillCheckCircleFill className="text-white/[0.5] text-[12px] ml-1" />
-              )}
-            </span>
+            {/* <span className="text-[12px] font-semibold mt-2 text-white/[0.7] flex items-center">
+              {creator?.name}
+              
+            </span> */}
             <div className="flex text-[12px] font-semibold text-white/[0.7] truncate overflow-hidden">
-              <span>{`${abbreviateNumber(video?.stats?.views, 2)} views`}</span>
+              <span>{`${abbreviateNumber(reaction?.count, 2)} reaction`}</span>
               <span className="flex text-[24px] leading-none font-bold text-white/[0.7] relative top-[-10px] mx-1">
                 .
               </span>
-              <span className="truncate">{video?.publishedTimeText}</span>
+              <span>{`${abbreviateNumber(comment?.count, 2)} comments`}</span>
             </div>
           </div>
         </div>

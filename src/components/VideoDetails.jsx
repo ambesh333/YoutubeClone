@@ -18,7 +18,7 @@ const VideoDetails = () => {
     useEffect(() => {
         document.getElementById("root").classList.add("custom-h");
         fetchVideoDetails();
-        fetchRelatedVideos();
+        // fetchRelatedVideos();
     }, [id]);
 
     const fetchVideoDetails = () => {
@@ -30,14 +30,14 @@ const VideoDetails = () => {
         });
     };
 
-    const fetchRelatedVideos = () => {
-        setLoading(true);
-        fetchDataFromApi(`video/related-contents/?id=${id}`).then((res) => {
-            console.log(res);
-            setRelatedVideos(res);
-            setLoading(false);
-        });
-    };
+    // const fetchRelatedVideos = () => {
+    //     setLoading(true);
+    //     fetchDataFromApi(`video/related-contents/?id=${id}`).then((res) => {
+    //         console.log(res);
+    //         setRelatedVideos(res);
+    //         setLoading(false);
+    //     });
+    // };
 
     return (
         <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-black">
@@ -56,7 +56,7 @@ const VideoDetails = () => {
                     <div className="text-white font-bold text-sm md:text-xl mt-4 line-clamp-2">
                         {video?.title}
                     </div>
-                    <div className="flex justify-between flex-col md:flex-row mt-4">
+                    {/* <div className="flex justify-between flex-col md:flex-row mt-4">
                         <div className="flex">
                             <div className="flex items-start">
                                 <div className="flex h-11 w-11 rounded-full overflow-hidden">
@@ -94,9 +94,9 @@ const VideoDetails = () => {
                                 )} Views`}
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="flex flex-col py-6 px-4 overflow-y-auto lg:w-[350px] xl:w-[400px]">
+                {/* <div className="flex flex-col py-6 px-4 overflow-y-auto lg:w-[350px] xl:w-[400px]">
                     {relatedVideos?.contents?.map((item, index) => {
                         if (item?.type !== "video") return false;
                         return (
@@ -106,7 +106,7 @@ const VideoDetails = () => {
                             />
                         );
                     })}
-                </div>
+                </div> */}
             </div>
         </div>
     );
