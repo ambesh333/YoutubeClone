@@ -1,30 +1,49 @@
-import React , {useState}from "react";
+import React, { useState } from "react";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 
-const VideoCard = ({ submission ,creator,reaction,comment}) => {
-  const [autoplay, setAutoplay] = useState(false);
+const VideoCard = ({ postId,submission, creator, reaction, comment }) => {
+  const [currentVideo, setCurrentVideo] = useState(null);
 
-  const handleThumbnailClick = () => {
-    console.log("Thumbnail clicked");
-    setAutoplay(true);
+  const handleVideoPlay = (videoUrl) => {
+    console.log("Video played");
+    setCurrentVideo(videoUrl);
   };
+  
+  const handleThumbnailClick = (videoUrl) => {
+    console.log("Thumbnail clicked");
+    console.log(videoUrl);
+    console.log("currentvideo");
+    console.log(currentVideo);
+    if (currentVideo !== videoUrl) {
+      setCurrentVideo(videoUrl);
+    } else {
+      setCurrentVideo(null); // Stop playing if clicked again
+    }
+  };
+  
+ 
 
   return (
-    <Link   to="#" onClick={handleThumbnailClick}>
+    <Link to="#" onClick={() => handleThumbnailClick(submission?.mediaUrl)}>
       <div className="flex flex-col mb-8">
         <div className="relative h-65 md:h-30 md:rounded-xl overflow-hidden">
-        <ReactPlayer
+          <ReactPlayer
             className="react-player"
             url={submission?.mediaUrl}
+            id={submission?.mediaUrl}
             controls={true}
             light={submission?.thumbnail}
+           
             width={"100%"}
-            playing={autoplay}
+            playing={currentVideo == submission?.mediaUrl}
+            onPlay={() =>  handleVideoPlay(submission?.mediaUrl)}
+            onPause={() => setCurrentVideo(null)}
+            onEnded={() => setCurrentVideo(null)}
           />
         </div>
-       
+
         <div className="flex text-white mt-3">
           <div className="flex items-start">
             <div className="flex h-9 w-9 rounded-full overflow-hidden">
