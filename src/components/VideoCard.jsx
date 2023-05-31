@@ -1,12 +1,16 @@
-import React from "react";
+import React , {useState}from "react";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 
 const VideoCard = ({ submission ,creator,reaction,comment}) => {
+  const [autoplay, setAutoplay] = useState(false);
+
   const handleThumbnailClick = () => {
     console.log("Thumbnail clicked");
-  };  
+    setAutoplay(true);
+  };
+
   return (
     <Link   to="#" onClick={handleThumbnailClick}>
       <div className="flex flex-col mb-8">
@@ -17,6 +21,7 @@ const VideoCard = ({ submission ,creator,reaction,comment}) => {
             controls={true}
             light={submission?.thumbnail}
             width={"100%"}
+            playing={autoplay}
           />
         </div>
        
