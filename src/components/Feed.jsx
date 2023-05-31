@@ -4,34 +4,37 @@ import LeftNav from "./LeftNav";
 import VideoCard from "./VideoCard";
 import Pagination from "./Pagination";
 import { fetchDataFromApi } from "../utils/api";
-import { useLocation } from "react-router-dom";
+
+
 
 const Feed = () => {
   const { loading ,searchResults} = useContext(Context);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  // const [searchResults, setSearchResults] = useState([]);
- 
+  
+  
+
   const fetchData = async (page) => {
     try {
+      console.log(`page=${page}`);
+       await fetchDataFromApi(`page=${currentPage}`);
       
-      const data = await fetchDataFromApi(`page=${page}`);
-      const totalPages = 9; // Set the total number of pages to 9
+      
+      const totalPages = 9;
       setTotalPages(totalPages);
-     
-      // Update searchResults in the context or state based on your implementation
+   
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
 
+     
+  };
   useEffect(() => {
-    document.getElementById("root").classList.remove("custom-h");
-    // Fetch data for initial page
+    document.getElementById("root").classList.add("custom-h");
     fetchData(currentPage);
   }, [currentPage]);
-  console.log("page no")
-  console.log(currentPage);
+
+  
   
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -45,13 +48,7 @@ const Feed = () => {
     }
   };
   
-  let location = useLocation();
-  useEffect(() => {
-    console.log("Path name")
-      console.log(location.pathname);
-    }, [location]);
 
- 
   return (
     <div className="flex flex-row h-[calc(100%-56px)]">
       <LeftNav />
@@ -66,6 +63,7 @@ const Feed = () => {
                 creator={item.creator}
                 reaction={item.reaction}
                 comment={item.comment}
+
               />
             ))}
         </div>
@@ -74,8 +72,8 @@ const Feed = () => {
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
           currentPage={currentPage}
-          
         />
+        
         </div>
         
       </div>

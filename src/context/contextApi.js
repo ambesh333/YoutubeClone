@@ -14,10 +14,13 @@ export const AppContext = (props) => {
     }, [selectedCategory]);
 
     const fetchSelectedCategoryData = (query) => {
+        
         setLoading(true);
         fetchDataFromApi(`search?q=${query}`).then(({data}) => {
-          console.log(data.posts); // response containing the entire data object
-          setSearchResults(data.posts); // Accessing the posts array nested under data
+
+            console.log("data and apges from context.api" )
+          console.log(data.posts); 
+          setSearchResults(data.posts); 
           setLoading(false);
         });
       };
